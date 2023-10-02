@@ -1,0 +1,11 @@
+{
+  "officeId": 45,
+  "isOpened": false,
+  "contacts": {
+    "phone": "+21312312345",
+    "email": "45@mail.ru",
+    "address": {
+      "city": "Moscow"
+    }
+  }
+}

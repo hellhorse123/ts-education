@@ -1,10 +1,10 @@
-"use strict";
-function getFullName(firstName, lastName) {
-    // после скобочек - явно возвращаемый тип функции
-    return `${firstName} ${lastName}`;
+function getFullName(userEntity) {
+    return "".concat(userEntity.firstName, " ").concat(userEntity.lastName);
 }
-const getFullNameArrow = (firstName, lastName) => {
-    // после скобочек - явно возвращаемый тип функции
-    return `${firstName} ${lastName}`;
+var user = {
+    firstName: "firstName",
+    lastName: "lastName",
+    city: "feo",
+    age: 33,
 };
-getFullName(true, false);
+console.log(getFullName(user));
