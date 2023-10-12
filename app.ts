@@ -1,3 +1,31 @@
-const skill: readonly [number, string] = [1, "Dev"]; // пример использования, приходит конфигурация в виде массива, и мы не хотим, чтобы ее использовали
+enum StatusCode {
+  SUCCESS = 1,
+  IN_PROCESS = "p",
+  FAILED = "f",
+}
 
-const skills: ReadonlyArray<string> = ["Dev", "Devops"];
+const res = {
+  message: "Платеж успешен",
+  statusCode: StatusCode.SUCCESS,
+};
+
+if (res.statusCode === StatusCode.SUCCESS) {
+}
+
+function action(status: StatusCode) {}
+
+action(StatusCode.SUCCESS);
+action(1);
+
+function compute() {
+  return 3;
+}
+
+enum Roles {
+  ADMIN,
+  USER = compute(), // можно поставить расчет, произведенный во время компиляции
+}
+
+function test(x: { ADMIN: number }) {}
+
+test(Roles);
