@@ -1,35 +1,9 @@
-function logId(id: string | number | boolean) {
-  // сужение типов  - позволяет в runtime сделать проверку на тип и применить ограничение на тип в рамках тайпскрипт
-  if (typeof id === "string") {
-    console.log(id);
-  } else if (typeof id === "number") {
-    console.log(id);
-  } else {
-    console.log(id);
-  }
+function fetchWithAuth(url: string, method: "post" | "get"): 1 | -1 {
+  return 1;
 }
+//использование - задание пропса
+fetchWithAuth("a", "get");
 
-//навести на консоль лог и смотреть тип переменных
+let method = "post";
 
-function logError(err: string | string[]) {
-  if (Array.isArray(err)) {
-    console.log(err);
-  } else {
-    console.log(err);
-  }
-}
-
-function logObject(obj: { a: number } | { b: number }) {
-  if ("a" in obj) {
-    console.log(obj.a);
-  } else {
-    console.log(obj.b);
-  }
-}
-
-function logMultipleIds(a: string | number, b: string | boolean) {
-  if (a === b) {
-  } else {
-    console.log(a);
-  }
-}
+fetchWithAuth("s", method as "post");
