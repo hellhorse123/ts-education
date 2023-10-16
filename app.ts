@@ -1,24 +1,39 @@
-type User = {
+interface User {
   name: string;
   age: number;
   skills: string[];
-};
+  log: (id: number) => string;
+}
 
-type Role = {
+interface Role {
+  roleID: number;
+}
+
+interface UserWithRole extends User, Role {
+  createdAt?: Date;
+}
+
+type User2 = {
   name: string;
-  id: number;
+  age: number;
+  skills: string[];
+  log: (id: number) => string;
 };
-
-type UserWithRole = User & Role;
-
-// type UserWithRole = {
-//   user: User;
-//   role: Role;
-// };
 
 let user: UserWithRole = {
   name: "string",
   age: 22,
   skills: ["1", "2"],
-  id: 1,
+  roleID: 1,
+  log(id) {
+    return "";
+  },
+};
+
+interface UserDictionary {
+  [index: number]: User;
+}
+
+type UserDictionary2 = {
+  [index: number]: User;
 };
