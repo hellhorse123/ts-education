@@ -1,9 +1,24 @@
-function fetchWithAuth(url: string, method: "post" | "get"): 1 | -1 {
-  return 1;
-}
-//использование - задание пропса
-fetchWithAuth("a", "get");
+type User = {
+  name: string;
+  age: number;
+  skills: string[];
+};
 
-let method = "post";
+type Role = {
+  name: string;
+  id: number;
+};
 
-fetchWithAuth("s", method as "post");
+type UserWithRole = User & Role;
+
+// type UserWithRole = {
+//   user: User;
+//   role: Role;
+// };
+
+let user: UserWithRole = {
+  name: "string",
+  age: 22,
+  skills: ["1", "2"],
+  id: 1,
+};
