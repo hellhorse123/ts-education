@@ -1,43 +1,41 @@
-// + и - такого подхода:
-// - : когда пишем свой интерфейс, который где-то потом доопределяем. Возможен ввод в заблуждение
-// + : при использовании библиотеки. Необходимо будет доопределить тип.
-
 interface User {
-  name: string;
-}
-
-interface User {
-  age: number;
+  login: string;
+  password?: string;
+  // не тоже самое, что password: string | undefined (потому что в таком случае оно обязательно должно быть, но может быть неопределено)
 }
 
 const user: User = {
-  name: "as",
-  age: 12,
+  login: "e@e.com",
+  password: "1",
 };
 
-
-
-
-// Так с тайпом нельзя
-// type User2 = {
-//   name: string;
-// }
-
-// type User2 = {
-//   age: number;
-// }
-
-
-//Тайп позволяет использовать простые (примитивные) типы, когда как интерфейс не позволяет заэкстендить (только объекты)
-type ID = string | number;
-
-interface ID2{
-  ID: string | number;
+function multiply(first: number, second?: number): number {
+  // в данном случае то же самое, что second: number | undefined , так как это функция
+  if (!second) {
+    return first * first;
+  }
+  return first * second;
 }
 
+function multiply2(first: number, second: number = 5): number {
+  // тут дефолтное значение (если ничего не передадим - умножим на 5)
+  if (!second) {
+    return first * first;
+  }
+  return first * second;
+}
 
-//Выводы:
-// type - всегда для примитивных типов (Intersaction, Union)
-// interface - всегда для объектов (удобство) + имплементация классов;
+interface UserPro {
+  login: string;
+  password?: {
+    type: "primary" | "secondary";
+  };
+}
 
+function testPass(user: UserPro) {
+  const t = user.password?.type;
+}
 
+function test(param?: string) {
+  const t = param ?? multiply(2);
+}
