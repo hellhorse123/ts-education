@@ -1,41 +1,37 @@
-let input: unknown;
+function generateError(mes: string): never {
+  throw new Error(mes);
+}
 
-input = 3;
-input = ["as", "asd"];
+function dumpError(): never {
+  while (true) {}
+}
 
-// при типе unknown мы не сможем присвоить/положить в другую переменную, где задан тип (пока не укажем тип)
-// let res: string = input;
+function rec(): never {
+  return rec();
+}
 
-function run(i: unknown) {
-  if (typeof i == "number") {
-    i++;
-  } else {
-    i;
+type paymentAction = "refund" | "checkout";
+//  | 'reject'; - при добавлении нового кейса reject, в compiled тайме у нас возникнет ошибка string не равно never, что позволит нам сразу отловить ошибку и включить юзкейс
+
+function processAction(action: paymentAction) {
+  switch (action) {
+    case "refund":
+      //...
+      break;
+    case "checkout":
+      //...
+      break;
+    default:
+      const _: never = action;
+      throw new Error("нет такого action");
   }
 }
 
-run(input);
-
-async function getData() {
-  try {
-    await fetch("");
-  } catch (e) {
-    if (e instanceof Error) {
-      console.log(e.message);
-    }
+function isString(x: string | number): boolean {
+  if (typeof x === "string") {
+    return true;
+  } else if (typeof x === "number") {
+    return true;
   }
+  generateError("errrrr");
 }
-//вторая проверка хуже, так как мы явно приводим ошибку к Error (а такого может не быть)
-async function getDataForce() {
-  try {
-    await fetch("");
-  } catch (error) {
-    const e = error as Error;
-    console.log(e.message);
-  }
-}
-
-
-type U1 = unknown | null; // все, что юнион тип с unknown всегда становится unknown
-
-type I1 = unknown & string; // intersection с unknown и любого другого типа дает этот тип
