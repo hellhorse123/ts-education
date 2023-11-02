@@ -1,37 +1,23 @@
-function generateError(mes: string): never {
-  throw new Error(mes);
+const n: null = null;
+
+interface User {
+  name: string;
 }
 
-function dumpError(): never {
-  while (true) {}
-}
-
-function rec(): never {
-  return rec();
-}
-
-type paymentAction = "refund" | "checkout";
-//  | 'reject'; - при добавлении нового кейса reject, в compiled тайме у нас возникнет ошибка string не равно never, что позволит нам сразу отловить ошибку и включить юзкейс
-
-function processAction(action: paymentAction) {
-  switch (action) {
-    case "refund":
-      //...
-      break;
-    case "checkout":
-      //...
-      break;
-    default:
-      const _: never = action;
-      throw new Error("нет такого action");
+function getUser() {
+  if (Math.random() > 0.5) {
+    return null;
+  } else {
+    return {
+      name: "Vasya",
+    } as User;
   }
 }
 
-function isString(x: string | number): boolean {
-  if (typeof x === "string") {
-    return true;
-  } else if (typeof x === "number") {
-    return true;
-  }
-  generateError("errrrr");
+const user = getUser();
+if (user) {
+  const n55 = user.name;
 }
+
+// null - явно заданный неопределенный объект
+// undefined - его мы не задали
