@@ -1,29 +1,22 @@
-interface User {
-  name: string;
-}
+class User {
+  name: string; //оп умолчанию в ts необходимо инициализировать свойства класса
 
-const a = {};
-
-assertUser(a);
-
-a.name = "Ben";
-
-//asserts - способ сказать TS, чо в рамках функции ниже мы производим проверку, что объект является юзером
-function assertUser(obj: unknown): asserts obj is User {
-  if (typeof obj === "object" && !!obj && "name" in obj) {
-    return;
+  constructor(name: string) {
+    this.name = name;
   }
-  throw new Error('not a user')
 }
 
-// Обычная проверка объекта
-// function assertUser(obj: unknown): obj is User {
-//   if (typeof obj === "object" && !!obj && "name" in obj) {
-//     return true;
-//   }
-//   return false;
-// }
+const user = new User("Shan");
+console.log(user);
+user.name = "Ben";
+console.log(user);
 
-// if(assertUser(a)){
-// a.name = "Ben";
-// }
+
+//1) "strictPropertyInitialization": false in tsconfig
+//2) ! for class prop
+class Admin {
+    role: number;
+}
+const admin = new Admin();
+
+admin.role = 1

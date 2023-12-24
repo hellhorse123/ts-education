@@ -1,36 +1,10 @@
 "use strict";
-function generateError(mes) {
-    throw new Error(mes);
-}
-function dumpError() {
-    while (true) { }
-}
-function rec() {
-    return rec();
-}
-function processAction(action) {
-    switch (action) {
-        case "refund":
-            //...
-            break;
-        case "checkout":
-            //...
-            break;
-        default:
-            const _ = action;
-            throw new Error("нет такого action");
+class User {
+    constructor(name) {
+        this.name = name;
     }
 }
-let a = 1 + 2;
-function asd(a) {
-    switch (a) {
-        case 3:
-        case 4:
-            console.log("В точку!");
-        case 5:
-            console.log("Перебор");
-        default:
-            console.log("Нет таких значений");
-    }
-}
-console.log(asd(a));
+const user = new User("Shan");
+console.log(user);
+user.name = "Ben";
+console.log(user);
