@@ -1,35 +1,39 @@
-//имплементация классом интерфейса - это та связка, которая позволяет нам абстрагироваться от конкретной реализации и договориться предварительно о той форме или свойствах того или иного класса, которые нам необходимы
+type PaymentStatus = "new" | "paid";
 
-interface ILogger {
-  log(...args: any[]): void;
-  error(...args: any[]): void;
-}
+class Payment {
+  id: number;
+  status: PaymentStatus = "new";
 
-class Logger implements ILogger {
-  log(...args: any[]): void {
-    console.log(...args);
+  constructor(id: number) {
+    this.id = id;
   }
-  async error(...args: any[]): Promise<void> {
-    //Кинуть во внешнюю систему
-    console.log(...args);
+
+  pay() {
+    this.status = "paid";
   }
 }
 
-interface IPayable {
-  pay(paymentId: number): void;
-  price?: number;
+class PersistedPayment extends Payment {
+  databaseId: number;
+  paidAt: Date;
+
+  constructor() {
+    const id = Math.random();
+    super(id); // означает, что мы обращаемся к конструктору класса Payment и начинаем его конструировать с указанным выше идентификатором.
+  }
+
+  save() {
+    //save in DB
+  }
+
+override  pay(date?: Date) {
+  // pay(date?: Date) {
+    super.pay();
+    // this.status = "paid"; вместо явного дублирования используем super как ссылку
+    if (date) {
+      this.paidAt = date;
+    }
+  }
 }
 
-interface IDeletable {
-  delete(): void;
-}
-
-class User implements IPayable, IDeletable {
-  delete(): void {
-    throw new Error("Method not implemented.");
-  }
-  pay(paymentId: number): void {
-    throw new Error("Method not implemented.");
-  }
-  price?: number | undefined;
-}
+new PersistedPayment();
