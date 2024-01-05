@@ -1,31 +1,37 @@
-//отличие конструктора от обычных методов:
-// - конструктор автоматически триггерится, когда мы используем new (тем самым вызываем конструктор и передаем туда параметр, указанный в конструкторе), после этого параметр присваивается инстансу нашего user
-// - в результате конструктор должен всегда возвращать instance этого класса (в данном случае User). (нельзя переопределить возвращаемое значение)
-// - конструктор не может принимать generic параметр (его может принимать класс)
+enum PaymentStatus {
+  Holded,
+  Processed,
+  Reversed,
+}
 
-// - конструктор можно сделать overload (имея описанную сигнатуру функции дополняем ее альтернативной сигнатурой)
+class Payment {
+  id: number;
+  status: PaymentStatus = PaymentStatus.Holded;
+  createdAt: Date = new Date();
+  updatedAt: Date;
 
-class User {
-  name: string;
-  age: number;
+  constructor(id: number) {
+    this.id = id;
+    // this.createdAt = new Date();
+    // this.status = PaymentStatus.Holded;
+  }
 
-  constructor();
-  constructor(name: string);
-  constructor(age: number);
-  constructor(name: string, age: number);
-  constructor(ageOrName?: string | number, age?: number) {
-    if (typeof ageOrName === "string") {
-      this.name = ageOrName;
-    } else if (typeof ageOrName === "number") {
-      this.age = ageOrName;
+  getPaymentLifeTime(): number {
+    return new Date().getTime() - this.createdAt.getTime();
+  }
+
+  unholdPayment(): void {
+    if (this.status == PaymentStatus.Processed) {
+      throw new Error("Payment cant be returned");
     }
-    if (typeof age === "number") {
-      this.age = age;
-    } 
+    this.status = PaymentStatus.Reversed;
+    this.updatedAt = new Date();
   }
 }
 
-const user = new User("Shan");
-const user2 = new User();
-const user3 = new User(33);
-const user4 = new User("Ben", 34);
+const payment = new Payment(1);
+payment.unholdPayment();
+console.log(payment);
+
+const time = payment.getPaymentLifeTime();
+console.log(time);
