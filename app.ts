@@ -1,27 +1,43 @@
 class User {
-  skills: string[];
-  addSkills(skill: string): void;
-  addSkills(skills: string[]): void;
-  addSkills(skillOrSkills: string | string[]): void {
-    if (typeof skillOrSkills === "string") {
-      this.skills.push(skillOrSkills);
-    } else if (typeof skillOrSkills === "object") {
-      this.skills.concat(skillOrSkills);
-    }
+  _login: string; // 6) также при использовании геттеров и сеттеров на свойтсве, например, login - login нужно закрывать приватным свойством
+  password: string;
+  createdAt: Date;
+
+  // getLogin(l: string) {
+  //   this.login = `user-${l}`;
+  // }
+
+  //реализация сеттера
+  set login(l: string) {
+    //1) если не указать тип переменной на входе (l) - она автоматиески будет string
+    //это из-за того, что то, что должен возвращать геттер, должен и получать сеттер
+    //2) сеттер можно определить как юнион тип (например, string | number)
+    //3) Если не испльзовать сеттер, то свойство login автоматически становится readOnly
+    //4) getter и setter не могут быть асинхронными
+    this._login = `user-${l}`;
+    // 5) Использование геттеров/сеттеров: 1 - когда нет асинхронного 2 - когда есть сайд эффекты (напр, доп присвоение даты)
+    this.createdAt = new Date();
+  }
+
+  //реализация геттера
+  get login() {
+    return "no_login"; // 1) если указать 5 - то l без явного указания типа станет number
+    // return this._login - может возврашаться свойство логина
+  }
+
+  // 4) проблема из-за пункта 4:
+  //   set password(p:string){
+  // использование ТОЛЬКО синхронных методов. Поэтому для паролей рекомендуется использовать методы
+  //   }
+  getPassword(p: string) {
+    //тут уже все может быть асинхронным
   }
 }
 
-// new User().addSkills() string or array
+const user = new User();
+// user.login = `user-...` Так мы бы присваивали без геттера, но ООП предполагает, что логин должен бть инкапсулирован внутрь юзера
 
-function run(distance: number): number;
-function run(distance: string): string;
-function run(distance: number | string): number | string {
-  // должно совпадать по типам не только то, что мы вводим в функцию как параметр, но  и то, что выводим
-  if (typeof distance === "number") {
-    return 1;
-  } else {
-    return "";
-  }
-}
+user.login = "myLogin";
 
-// run() string or number
+console.log(user);
+console.log(user.login);

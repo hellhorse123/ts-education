@@ -1,29 +1,19 @@
 "use strict";
-var PaymentStatus;
-(function (PaymentStatus) {
-    PaymentStatus[PaymentStatus["Holded"] = 0] = "Holded";
-    PaymentStatus[PaymentStatus["Processed"] = 1] = "Processed";
-    PaymentStatus[PaymentStatus["Reversed"] = 2] = "Reversed";
-})(PaymentStatus || (PaymentStatus = {}));
-class Payment {
-    constructor(id) {
-        this.id = id;
-        this.createdAt = new Date();
-        this.status = PaymentStatus.Holded;
+class User {
+    // getLogin(l: string) {
+    //   this.login = `user-${l}`;
+    // }
+    //реализация сеттера
+    set login(l) {
+        this._login = `user-${l}`;
     }
-    getPaymentLifeTime() {
-        return new Date().getTime() - this.createdAt.getTime();
-    }
-    unholdPayment() {
-        if (this.status == PaymentStatus.Processed) {
-            throw new Error("Payment cant be returned");
-        }
-        this.status = PaymentStatus.Reversed;
-        this.updatedAt = new Date();
+    //реализация геттера
+    get login() {
+        return 'no_login';
     }
 }
-const payment = new Payment(1);
-payment.unholdPayment();
-console.log(payment);
-const time = payment.getPaymentLifeTime();
-console.log(time);
+const user = new User();
+// user.login = `user-...` Так мы бы присваивали без геттера, но ООП предполагает, что логин должен бть инкапсулирован внутрь юзера
+user.login = "myLogin";
+console.log(user);
+console.log(user.login);
