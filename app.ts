@@ -1,43 +1,35 @@
-class User {
-  _login: string; // 6) также при использовании геттеров и сеттеров на свойтсве, например, login - login нужно закрывать приватным свойством
-  password: string;
-  createdAt: Date;
+//имплементация классом интерфейса - это та связка, которая позволяет нам абстрагироваться от конкретной реализации и договориться предварительно о той форме или свойствах того или иного класса, которые нам необходимы
 
-  // getLogin(l: string) {
-  //   this.login = `user-${l}`;
-  // }
+interface ILogger {
+  log(...args: any[]): void;
+  error(...args: any[]): void;
+}
 
-  //реализация сеттера
-  set login(l: string) {
-    //1) если не указать тип переменной на входе (l) - она автоматиески будет string
-    //это из-за того, что то, что должен возвращать геттер, должен и получать сеттер
-    //2) сеттер можно определить как юнион тип (например, string | number)
-    //3) Если не испльзовать сеттер, то свойство login автоматически становится readOnly
-    //4) getter и setter не могут быть асинхронными
-    this._login = `user-${l}`;
-    // 5) Использование геттеров/сеттеров: 1 - когда нет асинхронного 2 - когда есть сайд эффекты (напр, доп присвоение даты)
-    this.createdAt = new Date();
+class Logger implements ILogger {
+  log(...args: any[]): void {
+    console.log(...args);
   }
-
-  //реализация геттера
-  get login() {
-    return "no_login"; // 1) если указать 5 - то l без явного указания типа станет number
-    // return this._login - может возврашаться свойство логина
-  }
-
-  // 4) проблема из-за пункта 4:
-  //   set password(p:string){
-  // использование ТОЛЬКО синхронных методов. Поэтому для паролей рекомендуется использовать методы
-  //   }
-  getPassword(p: string) {
-    //тут уже все может быть асинхронным
+  async error(...args: any[]): Promise<void> {
+    //Кинуть во внешнюю систему
+    console.log(...args);
   }
 }
 
-const user = new User();
-// user.login = `user-...` Так мы бы присваивали без геттера, но ООП предполагает, что логин должен бть инкапсулирован внутрь юзера
+interface IPayable {
+  pay(paymentId: number): void;
+  price?: number;
+}
 
-user.login = "myLogin";
+interface IDeletable {
+  delete(): void;
+}
 
-console.log(user);
-console.log(user.login);
+class User implements IPayable, IDeletable {
+  delete(): void {
+    throw new Error("Method not implemented.");
+  }
+  pay(paymentId: number): void {
+    throw new Error("Method not implemented.");
+  }
+  price?: number | undefined;
+}
