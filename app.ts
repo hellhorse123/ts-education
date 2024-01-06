@@ -1,59 +1,39 @@
-class User {
-  name: string;
+class Vehicle {
+  public make: string; // по-умолчанию public, свойство можно не писать
+  private damages: string[]; // модификатор private работает только в TS, после компиляции в JS он пропадет
+  private _model: string;
+  protected run: number;
+  #price: number; // приватное свойство в языке JS. При компиляции оно останется приватным
+  //# на фронте использовать, когда хотим скрыть поле от внешних взаимодействий (например расширения Сhrome)
 
-  constructor(name: string) {
-    this.name = name;
+  private addDamage(damage: string) {
+    this.damages.push(damage);
+  }
+
+  set model(m: string) {
+    this._model = m;
+  }
+
+  get model() {
+    return this._model;
+  }
+
+  isPriceEqual(v: Vehicle) {
+    this.#price === v.#price; // проверка эквивалентности приватных свойств
   }
 }
 
-//inheritance
-class Users extends Array<User> {
-  searchByName(name: string) {
-    return this.filter((u) => u.name === name);
+new Vehicle().make = "d"; // можем модифицировать это свойство
+// new Vehicle().damages = "d"; НЕ можем модифицировать напрямую это свойство
+
+class EuroTruck extends Vehicle {
+  setDamage() {
+    //this.damages не можем обратиться к приватным свойствам класса Vehicle, даже с учетом того, что мы от него наследуемся
   }
-
-  override toString(): string {
-    return this.map((u) => u.name).join(", ");
-  }
-}
-
-const users = new Users();
-users.push(new User("Ben"));
-
-//composition
-class Users2 {
-  users: User[];
-
-  push(u: User) {
-    this.users.push(u);
-  }
-}
-
-//
-
-class Payment {
-  date: Date;
-}
-
-//inheritance
-class UserWithPayment extends Payment {
-  name: string;
-}
-
-//composition
-class UserWithPayment2 {
-  user: User;
-  payment: Payment;
-
-  constructor(user: User, payment: Payment) {
-    this.payment = payment;
-    this.user = user;
+  setRun(km: number) {
+    this.run = km / 0.62; // можем обращаться к protected свойству через наследование, однако извне класса все еще не модем вызывать его
   }
 }
 
 //выводы:
-//inheritance (наследование), когда использовать?
-//1) Когда наследуемся в рамках одной доменной области. Например юзер с кредами и просто пользователь (доменная область - пользователь)
-// Когда НЕ нужно использовать??
-//Когда наследуемся от агрегационных сложных внутренних массивов (Array<User>), однако наследование от утилитарных классов (Error) допустимо.
-//В остальных случаях лучше использовать композицию
+// мoдификаторы доступны не только для свойств, но и для функций
