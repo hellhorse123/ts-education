@@ -1,28 +1,19 @@
-class UserBuilder {
-  name: string | undefined;
-  setName(name: string): this {
-    // :this  - мы возвращаем этот объект
-    this.name = name;
-    return this;
-  }
-
-  isAdmin(): this is AdminBuilder {
-    // typeguard, который проверяет, что этот объект является AdminBuilder
-    return this instanceof AdminBuilder;
+abstract class Controller {
+  abstract handle(req: any): void; // при инстанцировании наследника, необходимо будет реализовать этот абстрактный метод в соответсвии с описанной тут сигнатурой
+//абстрактные методы могут использоваться только в абстрактных классах
+  handleWithLogs(req: any) {
+    console.log("start");
+    this.handle(req);
+    console.log("end");
   }
 }
 
-class AdminBuilder extends UserBuilder {
-  roles: string[] = []; // если удалить эту строку, то классы будут "как-бы одинаковыми". И проверка let user вернет let user: UserBuilder | AdminBuilder. это происходит, так как UserBuilder и AdminBuilder по своей структуре полностью совпадают. А в runTime у нас типов нет
+class UserController extends Controller {
+  handle(req: any): void {
+    console.log(req);
+  }
 }
 
-const res = new UserBuilder().setName("Ben"); // const res: UserBuilder
-const res2 = new AdminBuilder().setName("Ben"); // const res2: AdminBuilder. если заменить :this на :UserBuilder , то будет res2: UserBuilder. Это коллизия
+// new Controller() - не можем таким образом инстанцировать (создать экземпляр класса) абстрактный класс. Можем инстанцировать (создать экземпляр класса) только его наследников
 
-let user: UserBuilder | AdminBuilder = new UserBuilder();
-
-if (user.isAdmin()) {
-  console.log(user); // let user: AdminBuilder
-} else {
-  console.log(user); //let user: UserBuilder
-}
+const c = new UserController()
