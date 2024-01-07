@@ -1,34 +1,27 @@
 "use strict";
-// В JS this ссылается на контекст текущего объекта
-class Payment {
+class UserBuilder {
+    setName(name) {
+        // :this  - мы возвращаем этот объект
+        this.name = name;
+        return this;
+    }
+    isAdmin() {
+        // typeguard, который проверяет, что этот объект является AdminBuilder
+        return this instanceof AdminBuilder;
+    }
+}
+class AdminBuilder extends UserBuilder {
     constructor() {
-        this.date = new Date();
-        //второй способ не терять контекст - использовать стрелочные функции:
-        this.getDateArrow = () => {
-            return this.date;
-        };
-    }
-    getDate() {
-        return this.date;
-    }
-    getDate1() {
-        // спец параметр this, который явно указывает, к чему принадлежит контекст (не существует после компиляции, является "подсказкой для ts")
-        return this.date;
+        super(...arguments);
+        this.roles = [];
     }
 }
-const p = new Payment();
-console.log(p.getDate());
-const user = {
-    id: 1,
-    //   paymentDate: p.getDate, // undefined - был потерян контекст. Cослались на getDate, который возвращает this.date . Соответственно this в контексте объекта user, это и есть этот user (поэтому мы никаким образом не можем обратиться к тому, что это был Payment)
-    paymentDate: p.getDate.bind(p),
-    paymentDateArrow: p.getDateArrow,
-};
-console.log(user.paymentDate());
-console.log(user.paymentDateArrow());
-class PaymentPersistent extends Payment {
-    save() {
-        return super.getDate();
-    }
+const res = new UserBuilder().setName("Ben"); // const res: UserBuilder
+const res2 = new AdminBuilder().setName("Ben"); // const res2: AdminBuilder. если заменить :this на :UserBuilder , то будет res2: UserBuilder. Это коллизия
+let user = new UserBuilder();
+if (user.isAdmin()) {
+    console.log(user);
 }
-console.log(new PaymentPersistent().save());
+else {
+    console.log(user);
+}
