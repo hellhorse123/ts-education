@@ -1,5 +1,11 @@
 "use strict";
 class Controller {
+    //абстрактные методы могут использоваться только в абстрактных классах
+    handleWithLogs(req) {
+        console.log("start");
+        this.handle(req);
+        console.log("end");
+    }
 }
 class UserController extends Controller {
     handle(req) {
@@ -7,4 +13,4 @@ class UserController extends Controller {
     }
 }
 // new Controller() - не можем таким образом инстанцировать (создать экземпляр класса) абстрактный класс. Можем инстанцировать (создать экземпляр класса) только его наследников
-new UserController().handle('12');
+const c = new UserController();
