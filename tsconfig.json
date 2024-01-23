@@ -84,15 +84,15 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
 
     /* Type Checking */
-    "strict": true /* Enable all strict type-checking options. */,
-    // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
-    // "strictNullChecks": true,                         /* When type checking, take into account 'null' and 'undefined'. */
-    // "strictFunctionTypes": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
-    // "strictBindCallApply": true,                      /* Check that the arguments for 'bind', 'call', and 'apply' methods match the original function. */
+    "strict": true  /* основной триггер, включающий строгий режим */ /* Enable all strict type-checking options. */,
+    // "noImplicitAny": true,    /* ошибка при неявном задании any */                        /* Enable error reporting for expressions and declarations with an implied 'any' type. */
+    // "strictNullChecks": true,        /* жесткая проверка на нуль */                 /* When type checking, take into account 'null' and 'undefined'. */
+    // "strictFunctionTypes": true,           /* проверка на типы функции */           /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
+    // "strictBindCallApply": true,            //  проверка аргументов в функцию в соответствии с сигнатурой функции        /* Check that the arguments for 'bind', 'call', and 'apply' methods match the original function. */
     // "strictPropertyInitialization": true,             /* Check for class properties that are declared but not set in the constructor. */
-    // "noImplicitThis": true,                           /* Enable error reporting when 'this' is given the type 'any'. */
-    // "useUnknownInCatchVariables": true,               /* Default catch clause variables as 'unknown' instead of 'any'. */
-    // "alwaysStrict": true,                             /* Ensure 'use strict' is always emitted. */
+    // "noImplicitThis": true,            /* Проверка обращения this  */               /* Enable error reporting when 'this' is given the type 'any'. */
+    // "useUnknownInCatchVariables": true,        // e = unknown instead of any       /* Default catch clause variables as 'unknown' instead of 'any'. */
+    // "alwaysStrict": true,             // включает стрикт режим для JS                /* Ensure 'use strict' is always emitted. */
     // "noUnusedLocals": true,                           /* Enable error reporting when local variables aren't read. */
     // "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read. */
     // "exactOptionalPropertyTypes": true,               /* Interpret optional property types as written, rather than adding 'undefined'. */
