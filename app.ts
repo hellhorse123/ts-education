@@ -1,36 +1,46 @@
-function test(a: any) {} // явная проверка на any
+class User {
+  role?: "admin" | "user";
+  name!: string;
 
-//строгая проверка на null
-function test1(a: number): number | undefined {
-  if (a > 0) {
-    return a;
+  constructor(name: string) {}
+}
+
+//warning при неиспользуемых параметрах
+function createUser(user: User) {
+  //logic
+
+  // warning при поиске неиспользуемых переменных
+  const defaultUser = new User("default");
+
+  //error при присваивании undef необязательному свойству
+  //   defaultUser.role = undefined;
+
+  //не позволяет оставлять кейс без break/return
+  switch (user.role) {
+    case "admin":
+      const a = 7;
+    case "user":
+      return true;
+      //warning при недостежимом коде
+      const c = 1;
   }
 }
 
-/* проверка на типы функции */
-function test2(a: number): number {
-  return a;
+interface IChecks {
+  [check: string]: boolean;
 }
 
-type StrOrNumFunc = (a: number | string) => number;
-// let f: StrOrNumFunc = test2
+const c: IChecks = {};
 
-//  проверка аргументов в функцию в соответствии с сигнатурой функции
-// test2.apply(undefined, [1, 3]);
+//если обращаемся к нечетко заданному объекту может вернуть undefined
+const d= c['drive'] 
 
-class A {
-  b!: number;
+//
+// c.drive
 
-  test() {
-    return function () {
-      /* Проверка обращения this  */
-      // this.b = 5;
-    };
-  }
-}
 
-try {
-} catch (e) {
-    // e = unknown instead of any 
-//   console.log(e.message);
+class VipUser extends User{
+    //включать override при наследовании   
+    // override login(): void{}
+
 }
